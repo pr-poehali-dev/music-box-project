@@ -6,31 +6,36 @@ const albums = [
     id: 1,
     title: 'Тени Прошлого',
     description: 'Забытые воспоминания, которые не дают покоя...',
-    theme: 'abandoned'
+    theme: 'abandoned',
+    image: 'https://cdn.poehali.dev/projects/2ccb8a01-b5ab-4099-8ef2-c2a8098ec94c/files/64b657b6-a6e9-4ad0-851a-31cf449af07a.jpg'
   },
   {
     id: 2,
     title: 'Ночные Кошмары',
     description: 'То, что приходит, когда гаснет свет...',
-    theme: 'darkness'
+    theme: 'darkness',
+    image: 'https://cdn.poehali.dev/projects/2ccb8a01-b5ab-4099-8ef2-c2a8098ec94c/files/7c2fd989-fb97-4f00-94cc-928e75e06880.jpg'
   },
   {
     id: 3,
     title: 'Проклятые Души',
     description: 'Они не могут найти покой в этом мире...',
-    theme: 'ghosts'
+    theme: 'ghosts',
+    image: 'https://cdn.poehali.dev/projects/2ccb8a01-b5ab-4099-8ef2-c2a8098ec94c/files/2eabf459-e5ab-454b-b781-088c446bed5b.jpg'
   },
   {
     id: 4,
     title: 'Безумие',
     description: 'Грань между реальностью и галлюцинацией стёрта...',
-    theme: 'madness'
+    theme: 'madness',
+    image: 'https://cdn.poehali.dev/projects/2ccb8a01-b5ab-4099-8ef2-c2a8098ec94c/files/a894bd72-7e25-4cba-9d2f-c09b04149dda.jpg'
   },
   {
     id: 5,
     title: 'Последний Вздох',
     description: 'Финальные мгновения перед вечной тьмой...',
-    theme: 'death'
+    theme: 'death',
+    image: 'https://cdn.poehali.dev/projects/2ccb8a01-b5ab-4099-8ef2-c2a8098ec94c/files/ff633a13-6732-47cb-a005-73f01f4400a6.jpg'
   }
 ];
 
@@ -51,22 +56,18 @@ export default function AlbumGallery() {
           >
             {/* Album Cover */}
             <div className="relative aspect-square bg-gradient-to-br from-[var(--dark-gray)] to-[var(--shadow-gray)] rounded-lg overflow-hidden border-2 border-[var(--blood-red)] shadow-horror transition-all duration-300 hover-horror">
-              {/* Placeholder with horror aesthetic */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className={`transition-all duration-500 ${
-                  hoveredAlbum === album.id ? 'scale-110 opacity-100' : 'scale-100 opacity-70'
-                }`}>
-                  <Icon 
-                    name="Skull" 
-                    size={120} 
-                    className="text-[var(--blood-red)] opacity-50"
-                  />
-                </div>
-              </div>
+              {/* Horror image */}
+              <img 
+                src={album.image} 
+                alt={album.title}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
+                  hoveredAlbum === album.id ? 'scale-110' : 'scale-100'
+                }`}
+              />
 
               {/* Dark overlay */}
               <div className={`absolute inset-0 bg-black transition-opacity duration-300 ${
-                hoveredAlbum === album.id ? 'opacity-30' : 'opacity-60'
+                hoveredAlbum === album.id ? 'opacity-20' : 'opacity-40'
               }`}></div>
 
               {/* Floating particles effect */}
@@ -132,11 +133,15 @@ export default function AlbumGallery() {
               <p className="text-xl text-[var(--ghost-white)] mb-8">
                 {albums[selectedAlbum - 1].description}
               </p>
-              <div className="aspect-square bg-[var(--shadow-gray)] rounded-lg border border-[var(--blood-red)] flex items-center justify-center">
-                <Icon name="Skull" size={200} className="text-[var(--blood-red)] opacity-30" />
+              <div className="aspect-square bg-[var(--shadow-gray)] rounded-lg border border-[var(--blood-red)] overflow-hidden">
+                <img 
+                  src={albums[selectedAlbum - 1].image}
+                  alt={albums[selectedAlbum - 1].title}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <p className="mt-6 text-[var(--ghost-white)] opacity-60 italic">
-                "Некоторые образы слишком пугающие, чтобы показать их полностью..."
+                "Взгляни в бездну... если осмелишься..."
               </p>
             </div>
           </div>
