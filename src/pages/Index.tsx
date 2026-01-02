@@ -7,6 +7,16 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
@@ -64,8 +74,24 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen grain-effect fog-effect relative">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--shadow-gray)] border-b border-[var(--blood-red)] shadow-horror">
+    <div className="min-h-screen grain-effect relative overflow-hidden">
+      {/* Parallax fog layers */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+      >
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-[var(--fog-white)] to-transparent opacity-20"></div>
+      </div>
+
+      <div 
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+      >
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--blood-red)] opacity-5 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--blood-red)] opacity-5 blur-3xl rounded-full"></div>
+      </div>
+
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--shadow-gray)] border-b border-[var(--blood-red)] shadow-horror backdrop-blur-sm bg-opacity-95">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-3xl text-horror text-[var(--blood-red)]">
             The Music Box
@@ -93,22 +119,57 @@ const Index = () => {
         </div>
       </nav>
 
-      <main className="pt-20">
-        <section id="home" className="min-h-screen flex items-center justify-center py-20">
-          <MusicBox isPlaying={isPlaying} />
+      <main className="pt-20 relative z-10">
+        <section 
+          id="home" 
+          className="min-h-screen flex items-center justify-center py-20 relative"
+        >
+          <div 
+            style={{ 
+              transform: `translateY(${scrollY * 0.15}px)`,
+              transition: 'transform 0.1s ease-out'
+            }}
+          >
+            <MusicBox isPlaying={isPlaying} />
+          </div>
         </section>
 
-        <section id="albums" className="min-h-screen py-20 bg-[var(--shadow-gray)]">
-          <div className="container mx-auto px-4">
-            <h2 className="text-5xl text-center mb-16 text-horror text-[var(--blood-red)]">
+        <section 
+          id="albums" 
+          className="min-h-screen py-20 bg-[var(--shadow-gray)] relative"
+        >
+          <div 
+            className="container mx-auto px-4"
+            style={{ 
+              transform: `translateY(${Math.max(0, scrollY - 400) * 0.1}px)`,
+              transition: 'transform 0.1s ease-out'
+            }}
+          >
+            <h2 
+              className="text-5xl text-center mb-16 text-horror text-[var(--blood-red)]"
+              style={{ 
+                transform: `translateY(${Math.max(0, scrollY - 300) * 0.2}px)`,
+                transition: 'transform 0.1s ease-out'
+              }}
+            >
               Альбомы Ужаса
             </h2>
             <AlbumGallery />
           </div>
         </section>
 
-        <section id="contacts" className="min-h-screen flex items-center justify-center py-20">
-          <Contacts />
+        <section 
+          id="contacts" 
+          className="min-h-screen flex items-center justify-center py-20 relative"
+        >
+          <div 
+            style={{ 
+              transform: `translateY(${Math.max(0, scrollY - 1200) * 0.15}px)`,
+              transition: 'transform 0.1s ease-out'
+            }}
+          >
+            <Contacts />
+          </div>
         </section>
       </main>
 

@@ -23,8 +23,8 @@ export default function MusicBox({ isPlaying }: MusicBoxProps) {
   };
 
   return (
-    <div className="relative z-10">
-      <div className="text-center mb-12">
+    <div className="relative z-10 w-full">
+      <div className="text-center mb-12 parallax-text">
         <h2 className="text-6xl mb-4 text-horror text-[var(--blood-red)] animate-pulse">
           Музыкальная Шкатулка
         </h2>

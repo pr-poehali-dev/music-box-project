@@ -46,13 +46,16 @@ export default function AlbumGallery() {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {albums.map((album) => (
+        {albums.map((album, index) => (
           <div
             key={album.id}
             className="relative group cursor-pointer"
             onMouseEnter={() => setHoveredAlbum(album.id)}
             onMouseLeave={() => setHoveredAlbum(null)}
             onClick={() => setSelectedAlbum(album.id)}
+            style={{
+              animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+            }}
           >
             {/* Album Cover */}
             <div className="relative aspect-square bg-gradient-to-br from-[var(--dark-gray)] to-[var(--shadow-gray)] rounded-lg overflow-hidden border-2 border-[var(--blood-red)] shadow-horror transition-all duration-300 hover-horror">
